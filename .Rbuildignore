@@ -1,0 +1,14 @@
+^\.git$
+^\.github$
+^CLAUDE\.md$
+^CITATION\.cff$
+^LICENSE\.md$
+^data-raw$
+^docs$
+^analysis$
+^\.lintr$
+^\.Rprofile$
+^renv$
+^renv\.lock$
+^Qiblalab Package Design\.pdf$
+^\.claude$

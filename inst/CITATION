@@ -1,0 +1,27 @@
+bibentry(
+  bibtype  = "Manual",
+  title    = "qiblalab: Reproducible Analysis of Early Islamic Mosque Orientations",
+  author   = person("Christiaan", "Pauw"),
+  year     = "2026",
+  note     = "R package version 0.0.0.9000",
+  url      = "https://github.com/christiaanpauw/qiblalab",
+  textVersion = paste(
+    "Pauw C (2026). qiblalab: Reproducible Analysis of Early Islamic Mosque Orientations.",
+    "R package version 0.0.0.9000.",
+    "https://github.com/christiaanpauw/qiblalab"
+  )
+)
+
+bibentry(
+  bibtype   = "Misc",
+  title     = "Early Islamic Qibla Database 2021",
+  author    = person("Dan", "Gibson"),
+  year      = "2021",
+  doi       = "10.6084/m9.figshare.13570655.v2",
+  publisher = "figshare",
+  note      = "Dataset. Licence: CC BY 4.0",
+  textVersion = paste(
+    "Gibson D (2021). Early Islamic Qibla Database 2021.",
+    "figshare. Dataset. https://doi.org/10.6084/m9.figshare.13570655.v2"
+  )
+)

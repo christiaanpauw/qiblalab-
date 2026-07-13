@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this package, please cite it as below, and also cite the underlying dataset (Gibson 2021)."
+type: software
+title: "qiblalab: Reproducible Analysis of Early Islamic Mosque Orientations"
+version: 0.0.0.9000
+authors:
+  - family-names: Pauw
+    given-names: Christiaan
+    email: christiaan.pauw@nova.org.za
+license: MIT
+repository-code: "https://github.com/christiaanpauw/qiblalab"
+abstract: >
+  Tools for reproducible testing of competing hypotheses about the development
+  of the Islamic qibla (prayer direction). Imports and documents Dan Gibson's
+  Early Islamic Qibla Database, computes geodesic bearings, applies circular
+  statistics, and provides a structured hypothesis-testing framework.
+references:
+  - type: dataset
+    title: "Early Islamic Qibla Database 2021"
+    authors:
+      - family-names: Gibson
+        given-names: Dan
+    year: 2021
+    doi: 10.6084/m9.figshare.13570655.v2
+    license: CC-BY-4.0
+    repository: "https://figshare.com/articles/dataset/Early_Islamic_Qibla_Database/13570655"
