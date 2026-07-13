@@ -11,7 +11,7 @@ download_qibla_data(dir = qibla_cache_dir(), force = FALSE)
 Defaults to \code{tools::R_user_dir("qiblalab", "cache")}.}
 
 \item{force}{Logical scalar. Re-download even if the file already exists.
-Default \code{FALSE}. Does not silently replace a file whose MD5 matches — only
+Default \code{FALSE}. Does not silently replace a file whose MD5 matches - only
 re-downloads if forced or if the cached file is corrupt.}
 }
 \value{
