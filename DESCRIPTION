@@ -36,8 +36,10 @@ Suggests:
     geosphere,
     knitr,
     movMF,
+    readxl,
     rmarkdown,
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: knitr
 Language: en-GB
