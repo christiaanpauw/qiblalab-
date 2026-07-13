@@ -24,22 +24,22 @@ Imports:
     checkmate,
     cli,
     dplyr,
-    ggplot2,
-    purrr,
     rlang,
-    sf,
-    tibble,
-    tidyr
+    tibble
 Suggests:
     circular,
     covr,
     geosphere,
+    ggplot2,
     knitr,
     movMF,
+    purrr,
     readxl,
     rmarkdown,
+    sf,
     spelling,
     testthat (>= 3.0.0),
+    tidyr,
     withr
 VignetteBuilder: knitr
 Language: en-GB
