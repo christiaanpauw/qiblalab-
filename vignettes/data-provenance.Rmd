@@ -1,0 +1,131 @@
+---
+title: "Data Provenance and Import"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Provenance and Import}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>"
+)
+```
+
+## Overview
+
+`qiblalab` ships a cleaned version of Dan Gibson's *Early Islamic Qibla Database*
+(2021), published under CC BY 4.0 at
+<https://doi.org/10.6084/m9.figshare.13570655.v2>.
+This vignette explains:
+
+- what the shipped dataset contains and how it was cleaned,
+- how to download a fresh copy directly from Figshare,
+- the three-destination reference table, and
+- the data quality validation step.
+
+## The shipped dataset
+
+```{r load}
+library(qiblalab)
+
+data(gibson_qibla)
+data(destinations)
+
+dplyr::glimpse(gibson_qibla)
+```
+
+The dataset has `r nrow(gibson_qibla)` rows (one per mosque) and
+`r ncol(gibson_qibla)` columns. The key analytical columns are:
+
+| Column | Description |
+|---|---|
+| `latitude`, `longitude` | WGS 84 coordinates (decimal degrees) |
+| `azimuth` | Observed orientation of the qibla wall (degrees, 0–360) |
+| `year_ce_min`, `year_ce_max` | Estimated construction date range (CE) |
+| `gibson_classification` | Gibson's published destination classification |
+
+Columns with `NA` carry genuine uncertainty; they are never silently imputed.
+
+### Provenance attributes
+
+The dataset carries a `provenance` attribute recording the source DOI and
+download metadata, plus an `audit_log` of every cleaning decision.
+
+```{r provenance}
+prov <- attr(gibson_qibla, "provenance")
+cat("Source DOI  :", prov$doi,    "\n")
+cat("Access date :", prov$access_date, "\n")
+
+# First three audit-log entries
+head(attr(gibson_qibla, "audit_log"), 3)
+```
+
+### Azimuth coverage
+
+Not all mosques have a measured azimuth. The analysis functions handle
+`NA` azimuths transparently — they are excluded from calculations and
+flagged in output.
+
+```{r az-coverage}
+has_az <- !is.na(gibson_qibla$azimuth)
+cat(sprintf("%d / %d mosques have a measured azimuth (%.0f%%).\n",
+            sum(has_az), nrow(gibson_qibla),
+            100 * mean(has_az)))
+```
+
+### Date coverage
+
+```{r date-coverage}
+has_min <- !is.na(gibson_qibla$year_ce_min)
+has_max <- !is.na(gibson_qibla$year_ce_max)
+cat(sprintf("year_ce_min: %d mosques  |  year_ce_max: %d mosques\n",
+            sum(has_min), sum(has_max)))
+```
+
+## The destinations table
+
+```{r destinations}
+destinations
+```
+
+Three candidate destinations are shipped. Hypotheses are specified
+against these identifiers; the package computes great-circle bearings
+from each mosque to each destination on demand.
+
+## Downloading a fresh copy from Figshare
+
+The data can be re-ingested at any time to reproduce results against the
+original source file. **This requires a network connection and is not
+run during vignette build.**
+
+```{r download, eval = FALSE}
+raw_path <- download_qibla_data()          # verifies MD5
+raw_df   <- import_qibla_data(raw_path)    # reads the XLSX
+validate_qibla_data(raw_df)                # structural checks
+clean_df <- prepare_qibla_data(raw_df)     # standardise and document
+```
+
+The returned object from `prepare_qibla_data()` is identical in structure to
+the shipped `gibson_qibla`, with the `provenance` and `audit_log` attributes
+populated from the live download.
+
+## Quick descriptive overview
+
+```{r overview}
+dplyr::count(gibson_qibla, age_group, sort = TRUE)
+```
+
+```{r overview-country}
+dplyr::count(gibson_qibla, country, sort = TRUE) |> head(10)
+```
+
+## Citing the data
+
+When reporting analyses, cite both this package and the original dataset:
+
+> Gibson, D. (2021). *Early Islamic Qibla Database*.
+> figshare. Dataset. <https://doi.org/10.6084/m9.figshare.13570655.v2>
+> CC BY 4.0.

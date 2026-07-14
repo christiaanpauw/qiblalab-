@@ -1,0 +1,141 @@
+---
+title: "Destination-Blind Clustering"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Destination-Blind Clustering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>"
+)
+```
+
+## The destination-blind principle
+
+Circular clustering in `qiblalab` is *destination-blind*: cluster assignments
+are derived entirely from the observed azimuth data without reference to
+Gibson's classification or any candidate destination. This is enforced by
+`cluster_qiblas()` (ADR-07).
+
+The workflow is:
+
+1. Cluster orientations into directional groups (unsupervised).
+2. Validate the cluster solution internally (compactness, stability).
+3. Compare cluster assignments to Gibson's classification *post-hoc* as an
+   external validation step — clearly labelled, never used as input.
+
+## Circular summary
+
+Before clustering it is useful to examine the overall directional distribution.
+
+```{r load}
+library(qiblalab)
+
+data(gibson_qibla)
+
+# Use mosques with a measured azimuth
+mosques <- gibson_qibla[!is.na(gibson_qibla$azimuth), ]
+cat(nrow(mosques), "mosques with measured azimuths\n")
+
+circular_summary(mosques$azimuth)
+```
+
+The mean resultant length (`rbar`) near 1 indicates tight concentration; near 0
+indicates uniformity. The Rayleigh *p*-value tests whether the distribution
+departs from uniformity.
+
+## Clustering with circular k-means
+
+```{r cluster}
+set.seed(42)
+res3 <- cluster_qiblas(gibson_qibla, k = 3, seed = 42)
+print(res3)
+```
+
+### Model selection
+
+The model selection table shows the total within-cluster dispersion for each
+*k* from 1 to `k_max`. Look for an elbow in the curve.
+
+```{r model-sel}
+res3$model_selection
+```
+
+## Validating the cluster solution
+
+`validate_clusters()` runs three mandatory checks (ADR-10):
+
+1. **Internal**: within-cluster dispersion and centroid separation.
+2. **Stability**: bootstrap adjusted Rand index across 50 resamples.
+3. **External** (post-hoc): comparison to `gibson_classification` and
+   `age_group` — these columns are *not* used to form the clusters.
+
+```{r validate}
+val <- validate_clusters(
+  res3,
+  external      = c("gibson_classification", "age_group"),
+  bootstrap_n   = 50L,
+  seed          = 1L
+)
+print(val)
+```
+
+### Interpreting the external section
+
+A moderate ARI or NMI against `gibson_classification` is expected if the
+orientations carry signal about historical traditions. However, the
+destination-blind clusters are *not* a proxy for destination correctness:
+two mosques in the same cluster may be oriented toward different destinations
+within measurement uncertainty. The external section is evidence for
+**directional coherence within clusters**, not destination truth.
+
+## Hierarchical clustering
+
+For comparison, fit the same *k* = 3 with Ward hierarchical clustering.
+
+```{r hierarchical}
+res_hc <- cluster_qiblas(gibson_qibla, k = 3,
+                          method = "hierarchical", seed = 42)
+print(res_hc)
+```
+
+Compare the two solutions with the Adjusted Rand Index:
+
+```{r compare-ari}
+kmeans_labels <- res3$assignments
+hc_labels     <- res_hc$assignments
+
+ok  <- !is.na(kmeans_labels) & !is.na(hc_labels)
+ari <- qiblalab:::.ari(kmeans_labels[ok], hc_labels[ok])
+cat(sprintf("ARI between k-means and hierarchical solutions: %.3f\n", ari))
+```
+
+ARI near 1 means the two methods agree; lower values indicate the
+labelling is sensitive to the clustering method, which should be reported.
+
+## Visualising cluster profiles
+
+```{r profiles, eval = requireNamespace("ggplot2", quietly = TRUE), fig.width = 6, fig.height = 4}
+plot_cluster_profile(res3)
+```
+
+```{r map, eval = requireNamespace("ggplot2", quietly = TRUE), fig.width = 6, fig.height = 4}
+map_clusters(res3)
+```
+
+## Reporting guidance
+
+When publishing results from destination-blind clustering:
+
+- State the method, *k*, seed, and `k_max` scanned.
+- Report both internal and stability metrics.
+- Label all comparisons with Gibson's classification as *post-hoc external
+  validation*, never as model inputs.
+- If mean bootstrap ARI < 0.6, report the instability and interpret cluster
+  centroids with caution.
+- Use structured uncertainty where date ranges are wide; consider re-running
+  with `sample_qibla_dataset()` to assess sensitivity.

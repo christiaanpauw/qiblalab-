@@ -1,0 +1,47 @@
+Package: qiblalab
+Title: Reproducible Analysis of Early Islamic Mosque Orientations
+Version: 0.1.0
+Authors@R: c(
+    person("Christiaan", "Pauw",
+           email = "christiaan.pauw@nova.org.za",
+           role  = c("aut", "cre")),
+    person("Dan", "Gibson",
+           role    = "dtc",
+           comment = "Source dataset: Early Islamic Qibla Database 2021, https://doi.org/10.6084/m9.figshare.13570655.v2"))
+Description: Tools for reproducible testing of competing hypotheses about the
+    development of the Islamic qibla (prayer direction). Imports and documents Dan
+    Gibson's Early Islamic Qibla Database, computes geodesic bearings, applies
+    circular statistics, and provides a structured hypothesis-testing framework.
+    All analytical decisions are explicit and auditable. The package is a neutral
+    analytical instrument: it does not assume any candidate destination is correct.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+Imports:
+    checkmate,
+    cli,
+    dplyr,
+    rlang,
+    tibble
+Suggests:
+    circular,
+    covr,
+    geosphere,
+    ggplot2,
+    knitr,
+    movMF,
+    purrr,
+    readxl,
+    rmarkdown,
+    sf,
+    spelling,
+    testthat (>= 3.0.0),
+    tidyr,
+    withr
+VignetteBuilder: knitr
+Language: en-GB
+Depends: 
+    R (>= 3.5)
