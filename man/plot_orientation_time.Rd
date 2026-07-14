@@ -31,9 +31,9 @@ Scatter plot of observed mosque orientations against construction year, with
 an optional colour aesthetic.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-plot_orientation_time(gibson_qibla, colour_col = "age_group")
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  plot_orientation_time(qibla_scenarios$chronological)
 }
 }
 \seealso{

@@ -35,10 +35,9 @@ Plots mosque latitude/longitude as a point map. No basemap is bundled; add
 one via the \code{sf} or \code{ggmap} ecosystem using \code{+}.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-map_mosques(gibson_qibla)
-map_mosques(gibson_qibla, colour_col = "age_group")
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  map_mosques(qibla_scenarios$geographic_cluster, colour_col = "region")
 }
 }
 \seealso{

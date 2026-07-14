@@ -27,11 +27,11 @@ theoretical bearings. Accepts a numeric vector of errors or a
 \code{qibla_test_result} object directly.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
-res <- test_qibla_hypothesis(h, gibson_qibla)
-plot_residuals(res)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
+  res <- test_qibla_hypothesis(h, qibla_scenarios$mecca_tradition)
+  plot_residuals(res)
 }
 }
 \seealso{

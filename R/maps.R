@@ -20,10 +20,9 @@
 #' @seealso [map_clusters()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' map_mosques(gibson_qibla)
-#' map_mosques(gibson_qibla, colour_col = "age_group")
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   map_mosques(qibla_scenarios$geographic_cluster, colour_col = "region")
 #' }
 map_mosques <- function(data,
                         lat_col    = "latitude",
@@ -84,10 +83,10 @@ map_mosques <- function(data,
 #' @seealso [cluster_qiblas()], [map_mosques()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' res <- cluster_qiblas(gibson_qibla, k = 3, seed = 1)
-#' map_clusters(res)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   res <- cluster_qiblas(qibla_scenarios$two_traditions, k = 2, seed = 1)
+#'   map_clusters(res)
 #' }
 map_clusters <- function(cluster_result,
                          lat_col = "latitude",

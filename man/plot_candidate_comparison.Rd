@@ -29,10 +29,10 @@ Summarises the output of \code{\link[=compare_qibla_hypotheses]{compare_qibla_hy
 how many mosques are closest to each candidate.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-cmp <- compare_qibla_hypotheses(gibson_qibla)
-plot_candidate_comparison(cmp)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  cmp <- compare_qibla_hypotheses(qibla_scenarios$two_traditions)
+  plot_candidate_comparison(cmp)
 }
 }
 \seealso{

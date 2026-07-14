@@ -1,0 +1,107 @@
+url: https://christiaanpauw.github.io/qiblalab/
+
+template:
+  bootstrap: 5
+
+home:
+  title: "qiblalab"
+  description: >
+    Reproducible analysis of early Islamic mosque orientations and
+    hypothesis testing about qibla development.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/christiaanpauw/qiblalab
+
+reference:
+  - title: "Data"
+    desc: "Shipped datasets"
+    contents:
+      - gibson_qibla
+      - destinations
+      - qibla_scenarios
+
+  - title: "Data import"
+    desc: "Download, validate, and prepare the Figshare dataset"
+    contents:
+      - download_qibla_data
+      - import_qibla_data
+      - validate_qibla_data
+      - prepare_qibla_data
+      - validation_errors
+      - validation_warnings
+
+  - title: "Geodesic calculations"
+    desc: "Bearings and angular error metrics"
+    contents:
+      - bearing_to_destination
+      - bearing_to_candidates
+      - bearing_haversine
+      - bearing_vincenty
+      - bearing_rhumb
+      - angular_difference
+      - absolute_angular_error
+      - signed_angular_error
+
+  - title: "Circular statistics"
+    desc: "Directional summary statistics and tests"
+    contents:
+      - circular_summary
+      - circular_mean
+      - circular_resultant
+      - circular_var
+      - circular_sd
+      - circular_kappa
+      - rayleigh_test
+
+  - title: "Hypothesis testing"
+    desc: "Specify, test, and compare orientation hypotheses"
+    contents:
+      - qibla_hypothesis
+      - test_qibla_hypothesis
+      - compare_qibla_hypotheses
+
+  - title: "Intermediate bearings"
+    desc: "Intermediate-qibla methods"
+    contents:
+      - intermediate_bearing
+      - infer_latent_destination
+
+  - title: "Uncertainty and permutation"
+    desc: "Monte Carlo propagation and permutation tests"
+    contents:
+      - define_uncertainty
+      - sample_qibla_dataset
+      - run_sensitivity_analysis
+      - permute_orientations
+      - permutation_test
+
+  - title: "Clustering"
+    desc: "Destination-blind directional clustering and validation"
+    contents:
+      - cluster_qiblas
+      - validate_clusters
+
+  - title: "Visualisation"
+    desc: "ggplot2 plots and geographic maps"
+    contents:
+      - plot_rose
+      - plot_residuals
+      - plot_orientation_time
+      - plot_sensitivity
+      - plot_candidate_comparison
+      - plot_cluster_profile
+      - map_mosques
+      - map_clusters
+
+articles:
+  - title: "Vignettes"
+    navbar: ~
+    contents:
+      - data-provenance
+      - destination-blind-clustering

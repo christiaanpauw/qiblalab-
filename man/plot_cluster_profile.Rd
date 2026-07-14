@@ -28,10 +28,10 @@ Draws one polar histogram per cluster, making it easy to compare the
 directional distributions across cluster solutions.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-res <- cluster_qiblas(gibson_qibla, k = 3, seed = 1)
-plot_cluster_profile(res)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  res <- cluster_qiblas(qibla_scenarios$two_traditions, k = 2, seed = 1)
+  plot_cluster_profile(res)
 }
 }
 \seealso{

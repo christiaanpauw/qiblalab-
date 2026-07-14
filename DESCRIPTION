@@ -1,6 +1,6 @@
 Package: qiblalab
 Title: Reproducible Analysis of Early Islamic Mosque Orientations
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Christiaan", "Pauw",
            email = "christiaan.pauw@nova.org.za",
@@ -43,3 +43,5 @@ Suggests:
     withr
 VignetteBuilder: knitr
 Language: en-GB
+Depends: 
+    R (>= 3.5)

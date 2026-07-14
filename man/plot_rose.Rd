@@ -34,9 +34,9 @@ Draws a circular histogram (rose diagram) of observed azimuths in compass
 convention: 0° at the top (North), increasing clockwise.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-plot_rose(gibson_qibla)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  plot_rose(qibla_scenarios$mecca_tradition)
 }
 }
 \seealso{

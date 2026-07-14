@@ -33,10 +33,10 @@ Plots mosque locations coloured by cluster assignment from \code{\link[=cluster_
 Mosques without an assigned cluster are plotted in grey.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-res <- cluster_qiblas(gibson_qibla, k = 3, seed = 1)
-map_clusters(res)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  res <- cluster_qiblas(qibla_scenarios$two_traditions, k = 2, seed = 1)
+  map_clusters(res)
 }
 }
 \seealso{

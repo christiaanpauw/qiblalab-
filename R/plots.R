@@ -20,9 +20,9 @@
 #' @seealso [plot_orientation_time()], [plot_cluster_profile()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' plot_rose(gibson_qibla)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   plot_rose(qibla_scenarios$mecca_tradition)
 #' }
 plot_rose <- function(data,
                       azimuth_col = "azimuth",
@@ -86,11 +86,11 @@ plot_rose <- function(data,
 #' @seealso [test_qibla_hypothesis()], [plot_sensitivity()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
-#' res <- test_qibla_hypothesis(h, gibson_qibla)
-#' plot_residuals(res)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
+#'   res <- test_qibla_hypothesis(h, qibla_scenarios$mecca_tradition)
+#'   plot_residuals(res)
 #' }
 plot_residuals <- function(x,
                            signed = TRUE,
@@ -138,9 +138,9 @@ plot_residuals <- function(x,
 #' @seealso [plot_rose()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' plot_orientation_time(gibson_qibla, colour_col = "age_group")
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   plot_orientation_time(qibla_scenarios$chronological)
 #' }
 plot_orientation_time <- function(data,
                                   azimuth_col = "azimuth",
@@ -201,11 +201,11 @@ plot_orientation_time <- function(data,
 #' @seealso [test_qibla_hypothesis()], [run_sensitivity_analysis()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
-#' res <- test_qibla_hypothesis(h, gibson_qibla)
-#' plot_sensitivity(res)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
+#'   res <- test_qibla_hypothesis(h, qibla_scenarios$mecca_tradition)
+#'   plot_sensitivity(res)
 #' }
 plot_sensitivity <- function(x, title = NULL) {
   rlang::check_installed("ggplot2", reason = "for plot_sensitivity()")
@@ -260,10 +260,10 @@ plot_sensitivity <- function(x, title = NULL) {
 #' @seealso [compare_qibla_hypotheses()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' cmp <- compare_qibla_hypotheses(gibson_qibla)
-#' plot_candidate_comparison(cmp)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   cmp <- compare_qibla_hypotheses(qibla_scenarios$two_traditions)
+#'   plot_candidate_comparison(cmp)
 #' }
 plot_candidate_comparison <- function(compare_result,
                                       exclude_ambiguous = FALSE,
@@ -308,10 +308,10 @@ plot_candidate_comparison <- function(compare_result,
 #' @seealso [cluster_qiblas()], [plot_rose()]
 #' @export
 #' @examples
-#' \dontrun{
-#' data(gibson_qibla)
-#' res <- cluster_qiblas(gibson_qibla, k = 3, seed = 1)
-#' plot_cluster_profile(res)
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   data(qibla_scenarios)
+#'   res <- cluster_qiblas(qibla_scenarios$two_traditions, k = 2, seed = 1)
+#'   plot_cluster_profile(res)
 #' }
 plot_cluster_profile <- function(cluster_result,
                                  bins  = 24L,

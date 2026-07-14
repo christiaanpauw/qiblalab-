@@ -22,11 +22,11 @@ tolerance threshold varies. Accepts either a sensitivity tibble (from
 \code{qibla_test_result} directly.
 }
 \examples{
-\dontrun{
-data(gibson_qibla)
-h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
-res <- test_qibla_hypothesis(h, gibson_qibla)
-plot_sensitivity(res)
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  data(qibla_scenarios)
+  h   <- qibla_hypothesis("Mecca", candidate = "mecca", tolerance = 5)
+  res <- test_qibla_hypothesis(h, qibla_scenarios$mecca_tradition)
+  plot_sensitivity(res)
 }
 }
 \seealso{
